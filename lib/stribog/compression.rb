@@ -62,7 +62,7 @@ module Stribog
       BinaryVector.from_byte(
         not_zeros_indexes(vector)
           .inject(0) { |acc, elem| acc ^ MATRIX_A[elem] }
-      ).addition_to(size: 64)
+      ).addition_by_zeros(size: 64)
     end
 
     # rubocop:disable Style/EachWithObject

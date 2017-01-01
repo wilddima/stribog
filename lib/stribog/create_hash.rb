@@ -4,29 +4,29 @@ module Stribog
   #
   # @author WildDima
   class CreateHash
-    attr_reader :vector_adapter, :message_adapter, :message, :digest_length
+    attr_reader :binary_vector, :message_adapter, :message, :digest_length, :message_vector
 
     HASH_LENGTH = 512
 
-    def initialize(message, vector_adapter: BinaryVector, message_adapter: Message)
-      @vector_adapter = vector_adapter
-      @message_adapter = message_adapter
-      @message = message
+    def initialize(message, binary_vector: BinaryVector)
+      @binary_vector = binary_vector
+      @message = binary_vector.from_hex(message)
       @n = new_binary_vector(Array.new(HASH_LENGTH, 0))
       @sum = new_binary_vector(Array.new(HASH_LENGTH, 0))
     end
 
-    def call(digest_length: HASH_LENGTH)
+    def call(digest_length = HASH_LENGTH)
       @digest_length = digest_length
       @hash_vector = create_hash_vector
+      @message_vector = message.dup
 
-      while message.size > HASH_LENGTH
-        message = new_message_from_bin new_binary_vector(@message.vector[-HASH_LENGTH..-1])
-        message_cut!(sum: @sum, n: @n, message: message, hash_vector: @hash_vector)
-        @message = new_message_from_bin new_binary_vector(@message.vector[0...-HASH_LENGTH])
+      while message_vector.size > HASH_LENGTH
+        message_vector = new_binary_vector(message_vector.vector[-HASH_LENGTH..-1])
+        message_cut!(sum: @sum, n: @n, message: message_vector, hash_vector: @hash_vector)
+        @message_vector = new_binary_vector(message_vector.vector[0...-HASH_LENGTH])
       end
 
-      core_hashing!(sum: @sum, n: @n, message: @message, hash_vector: @hash_vector)
+      core_hashing!(sum: @sum, n: @n, message: @message_vector, hash_vector: @hash_vector)
 
       @hash_vector = compress(message: @n, hash_vector: @hash_vector)
 
@@ -63,17 +63,18 @@ module Stribog
     end
 
     def message_cut!(sum:, n:, message:, hash_vector:)
-      @hash_vector = compress(n: n, message: message.vector, hash_vector: hash_vector)
-      @n = addition_in_ring_to_binary(n.to_dec, message.vector.size)
-      @sum = addition_in_ring_to_binary(sum.to_dec, message.vector.to_dec)
+      @hash_vector = compress(n: n, message: message, hash_vector: hash_vector)
+      @n = addition_in_ring_to_binary(n.to_dec, message.size)
+      @sum = addition_in_ring_to_binary(sum.to_dec, message.to_dec)
     end
 
     def core_hashing!(sum:, n:, message:, hash_vector:)
-      @hash_vector = compress(n: n.addition_to(size: HASH_LENGTH),
-                              message: message.addition_to(size: HASH_LENGTH),
+      @hash_vector = compress(n: n.addition_by_zeros(size: HASH_LENGTH),
+                              message: message.addition_bit_padding(size: HASH_LENGTH),
                               hash_vector: hash_vector)
       @n = addition_in_ring_to_binary(n.to_dec, message.size)
-      @sum = addition_in_ring_to_binary(sum.to_dec, message.addition_to(size: HASH_LENGTH).to_dec)
+      @sum = addition_in_ring_to_binary(sum.to_dec,
+                                        message.addition_bit_padding(size: HASH_LENGTH).to_dec)
     end
 
     def addition_in_ring(first, second, ring)
@@ -81,7 +82,7 @@ module Stribog
     end
 
     def addition_in_ring_to_binary(first, second, ring = 2**HASH_LENGTH, size: HASH_LENGTH)
-      vector_adapter.from_byte(addition_in_ring(first, second, ring), size: size)
+      binary_vector.from_byte(addition_in_ring(first, second, ring), size: size)
     end
 
     def compress(message:, hash_vector:, n: nil)
@@ -89,12 +90,8 @@ module Stribog
       Compression.new(n, message, hash_vector).start
     end
 
-    def new_message_from_bin(bin)
-      message_adapter.from_bin(bin)
-    end
-
     def new_binary_vector(vector)
-      vector_adapter.new(vector)
+      binary_vector.new(vector)
     end
   end
 end

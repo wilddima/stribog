@@ -13,7 +13,7 @@ module Stribog
       @hash_vector = hash_vector
     end
 
-    def start
+    def call
       vector = lpsx_func @n, @hash_vector
       vector = func_e vector, @message
       vector = vector ^ @hash_vector

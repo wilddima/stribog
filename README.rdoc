@@ -1,6 +1,6 @@
 == Stribog
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stribog`. To experiment with that code, run `bin/console` for an interactive prompt.
+Ruby library implementing GOST 34.11-12 Stribog
 
 === Installation
 

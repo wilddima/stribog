@@ -53,18 +53,19 @@ module Stribog
     end
 
     def compact_message(sum:, n:, message_vector:, hash_vector:, message_head: nil)
+      current_vector = message_head || message_vector
       if message_vector.size < HASH_LENGTH || !message_head.nil? && message_head.size < HASH_LENGTH
-        return { sum: sum, n: n, message_vector: message_head || message_vector,
+        return { sum: sum, n: n, message_vector: current_vector,
                  hash_vector: hash_vector }
       end
 
       compact_message(
-        sum: addition_in_ring_to_binary(sum.to_dec, message_vector.to_dec),
-        n: addition_in_ring_to_binary(n.to_dec, slice_message_tail(message_vector).size),
+        sum: addition_in_ring_to_binary(sum.to_dec, current_vector.to_dec),
+        n: addition_in_ring_to_binary(n.to_dec, slice_message_tail(current_vector).size),
         message_vector: message_vector,
-        hash_vector: compress(n: n, message: slice_message_tail(message_vector),
+        hash_vector: compress(n: n, message: slice_message_tail(current_vector),
                               hash_vector: hash_vector),
-        message_head: slice_message_head(message_vector)
+        message_head: slice_message_head(current_vector)
       )
     end
 

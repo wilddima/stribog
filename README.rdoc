@@ -1,0 +1,41 @@
+== Stribog
+
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stribog`. To experiment with that code, run `bin/console` for an interactive prompt.
+
+=== Installation
+
+Add this line to your application's Gemfile:
+
+
+  gem 'stribog'
+
+
+And then execute:
+
+  $ bundle
+
+Or install it yourself as:
+
+  $ gem install stribog
+
+=== Usage
+
+  require 'stribog'
+
+  hash = Stribog::CreateHash.new('ruby')
+
+  # for 256 bit
+  hash.(256).to_hex #=> "cde7864b760a690f4ec24ffe5c66bd2c00db843e9cf1b82b6c467dba5a7846a7"
+
+  # for 512 bit
+  hash.(512).to_hex #=> "f0dafc0703f801d1ecbe7ff246808d07507f67879eaacf887ba041336fd51e0a964f00470ed0eedb0378a39e019eb308876ea8c84bb89e2c35159fb6dbbdc598"
+
+=== Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/wilddima/stribog. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+
+=== License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+

@@ -1,4 +1,3 @@
-require 'byebug'
 module Stribog
   # Hash function
   #
@@ -54,7 +53,7 @@ module Stribog
 
     def compact_message(sum:, n:, message_vector:, hash_vector:, message_head: nil)
       current_vector = message_head || message_vector
-      if message_vector.size < HASH_LENGTH || !message_head.nil? && message_head.size < HASH_LENGTH
+      if current_vector.size < HASH_LENGTH
         return { sum: sum, n: n, message_vector: current_vector,
                  hash_vector: hash_vector }
       end

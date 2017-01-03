@@ -1,5 +1,10 @@
 == Stribog
 
+https://travis-ci.org/WildDima/stribog.svg?branch=master
+
+{<img src="https://travis-ci.org/WildDima/stribog.svg?branch=master"
+alt="Build Status" />}[https://travis-ci.org/WildDima/stribog]
+
 Ruby library implementing GOST 34.11-12 Stribog
 
 === Installation

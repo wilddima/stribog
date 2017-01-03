@@ -1,21 +1,19 @@
 module Stribog
-  # Hash function
+  # CreateHash
   #
   # @author WildDima
   class CreateHash
-    attr_reader :binary_vector, :message_adapter, :message, :digest_length, :message_vector
+    attr_reader :binary_vector, :message, :digest_length, :message_vector
 
     HASH_LENGTH = 512
 
     def initialize(message, binary_vector: BinaryVector)
       @binary_vector = binary_vector
       @message = binary_vector.from_hex(message)
-      @n = binary_vector_field_by
-      @sum = binary_vector_field_by
     end
 
     def call(digest_length = HASH_LENGTH)
-      create_hash_params!(digest_length: digest_length)
+      prepare_hash_params!(digest_length: digest_length)
 
       return_hash(
         final_compression(
@@ -33,7 +31,9 @@ module Stribog
 
     private
 
-    def create_hash_params!(digest_length:)
+    def prepare_hash_params!(digest_length:)
+      @n = binary_vector_field_by
+      @sum = binary_vector_field_by
       @digest_length = digest_length
       @hash_vector = create_hash_vector
       @message_vector = message.dup

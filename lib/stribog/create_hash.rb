@@ -1,15 +1,49 @@
 module Stribog
   # CreateHash
   #
+  # Class, which create digests.
   # @author WildDima
   class CreateHash
-    attr_reader :binary_vector, :message, :digest_length, :message_vector
+    # Original message
+    #
+    # @api public
+    # @example
+    #   hash.message
+    # @return [String] contains original message
+    attr_reader :message
+
+    # Length of digest. Should be equal to 256 or 512.
+    #
+    # @api public
+    # @example
+    #   digest.digest_length
+    # @return [Fixnum] binary representation of digest
+    attr_reader :digest_length
+
+    # Contain message as instance of BinaryVector
+    #
+    # @api public
+    # @example
+    #   digest.message_vector
+    # @return [BinaryVector] binary representation of message
+    attr_reader :message_vector
+
+    # Contain class which implements binary operations
+    #
+    # @api public
+    attr_reader :binary_vector
+
+    # Contain class which implements Digest
+    #
+    # @api public
+    attr_reader :digest
 
     HASH_LENGTH = 512
 
-    def initialize(message, binary_vector: BinaryVector)
+    def initialize(message, binary_vector: BinaryVector, digest: Digest)
       @binary_vector = binary_vector
-      @message = binary_vector.from_hex(message)
+      @digest = digest
+      @message = message
     end
 
     def call(digest_length = HASH_LENGTH)
@@ -36,7 +70,7 @@ module Stribog
       @sum = binary_vector_field_by
       @digest_length = digest_length
       @hash_vector = create_hash_vector
-      @message_vector = message.dup
+      @message_vector = binary_vector.from_hex(message)
     end
 
     def create_hash_vector
@@ -98,9 +132,9 @@ module Stribog
     def return_hash(final_vector)
       case digest_length
       when 512
-        final_vector
+        create_digest(final_vector)
       when 256
-        binary_vector_from_array(final_vector[0..255])
+        create_digest(binary_vector_from_array(final_vector[0..255]))
       else
         raise ArgumentError,
               "digest length must be equal to 256 or 512, not #{digest_length}"
@@ -125,6 +159,10 @@ module Stribog
 
     def binary_vector_field_by(size: HASH_LENGTH, value: 0)
       binary_vector_from_array(Array.new(size, value))
+    end
+
+    def create_digest(binary_vector)
+      digest.new(binary_vector: binary_vector)
     end
   end
 end

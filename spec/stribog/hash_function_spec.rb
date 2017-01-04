@@ -4,7 +4,6 @@ require 'spec_helper'
 describe Stribog::CreateHash do
   context '256 bit hash, with 504 bit message' do
     context 'correct message and correct hash' do
-      # message = Stribog::Message.from_hex '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323130'
       message = '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323130'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do
@@ -13,7 +12,6 @@ describe Stribog::CreateHash do
     end
 
     context 'incorrect message and incorrect hash' do
-      # message = Stribog::Message.from_hex '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323131'
       message = '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323131'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do
@@ -24,7 +22,6 @@ describe Stribog::CreateHash do
 
   context '256 bit hash, with 576 bit message' do
     context 'correct message and correct hash' do
-      # message = Stribog::Message.from_hex 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d1'
       message = 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d1'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do
@@ -33,7 +30,6 @@ describe Stribog::CreateHash do
     end
 
     context 'incorrect message and incorrect hash' do
-      # message = Stribog::Message.from_hex 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d2'
       message = 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d2'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do
@@ -44,7 +40,6 @@ describe Stribog::CreateHash do
 
   context '512 bit hash, with 504 bit message' do
     context 'correct message and correct hash' do
-      # message = Stribog::Message.from_hex '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323130'
       message = '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323130'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do
@@ -53,7 +48,6 @@ describe Stribog::CreateHash do
     end
 
     context 'incorrect message and incorrect hash' do
-      # message = Stribog::Message.from_hex '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323131'
       message = '323130393837363534333231303938373635343332313039383736353433323130393837363534333231303938373635343332313039383736353433323131'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do
@@ -64,7 +58,6 @@ describe Stribog::CreateHash do
 
   context '512 bit hash, with 576 bit message' do
     context 'correct message and correct hash' do
-      # message = Stribog::Message.from_hex 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d1'
       message = 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d1'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do
@@ -73,7 +66,6 @@ describe Stribog::CreateHash do
     end
 
     context 'incorrect message and incorrect hash' do
-      # message = Stribog::Message.from_hex 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d2'
       message = 'fbe2e5f0eee3c820fbeafaebef20fffbf0e1e0f0f520e0ed20e8ece0ebe5f0f2f120fff0eeec20f120faf2fee5e2202ce8f6f3ede220e8e6eee1e8f0f2d1202ce8f0f2e5e220e5d2'
       q = Stribog::CreateHash.new(message)
       it 'should has correct hash' do

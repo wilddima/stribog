@@ -1,7 +1,7 @@
 module Stribog
   # CreateHash
   #
-  # Class, which create digests.
+  # Class, which creates digests.
   # @author WildDima
   class CreateHash
     # Original message
@@ -59,6 +59,7 @@ module Stribog
 
     private
 
+    # Create instance vars for hashing
     def prepare_hash_params!(digest_length:)
       @n = binary_vector_field_by
       @sum = binary_vector_field_by
@@ -67,6 +68,7 @@ module Stribog
       @message_vector = binary_vector.from_hex(message)
     end
 
+    # Create hash_vector for hashing
     def create_hash_vector
       case digest_length
       when 512
@@ -79,6 +81,7 @@ module Stribog
       end
     end
 
+    # Method, which slices longer messages, and hashings them by parts.
     def compact_message(sum:, n:, message_vector:, hash_vector:, message_head: nil)
       current_vector = message_head || message_vector
       if current_vector.size < HASH_LENGTH
@@ -96,14 +99,17 @@ module Stribog
       )
     end
 
+    # Method, which slices head of message
     def slice_message_head(message_vector)
       binary_vector_from_array(message_vector.vector[0...-HASH_LENGTH])
     end
 
+    # Method, which slices head of tail
     def slice_message_tail(message_vector)
       binary_vector_from_array(message_vector.vector[-HASH_LENGTH..-1])
     end
 
+    # Method, which implements main hashing
     def core_hashing(sum:, n:, message_vector:, hash_vector:)
       new_sum = addition_in_ring_to_binary(sum.to_dec,
                                            message_vector
@@ -119,10 +125,12 @@ module Stribog
       { sum: new_sum, n: new_n, hash_vector: new_hash_vector }
     end
 
+    # Method, which implements final compression
     def final_compression(sum:, n:, hash_vector:)
       compress(message: sum, hash_vector: compress(message: n, hash_vector: hash_vector))
     end
 
+    # Method, which return digest, dependent on them length
     def return_hash(final_vector)
       case digest_length
       when 512
@@ -135,26 +143,32 @@ module Stribog
       end
     end
 
+    # Method implements addition in ring
     def addition_in_ring(first, second, ring)
       (first + second) % ring
     end
 
+    # Method implements addition in ring and creates binary vector
     def addition_in_ring_to_binary(first, second, ring = 2**HASH_LENGTH, size: HASH_LENGTH)
       binary_vector.from_byte(addition_in_ring(first, second, ring), size: size)
     end
 
+    # Compression method
     def compress(message:, hash_vector:, n: binary_vector_field_by)
       Compression.new(n, message, hash_vector).call
     end
 
+    # Method creates binary vector from array
     def binary_vector_from_array(vector)
       binary_vector.new(vector)
     end
 
+    # Method creates binary vector and fields it by passed values
     def binary_vector_field_by(size: HASH_LENGTH, value: 0)
       binary_vector_from_array(Array.new(size, value))
     end
 
+    # Create new instance of Digest
     def create_digest(binary_vector)
       digest.new(binary_vector: binary_vector)
     end

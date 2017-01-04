@@ -1,8 +1,7 @@
-require_relative 'hash_params'
-
 module Stribog
   # Compression
   #
+  # Class implements compression function of GOST R 34.11-2012 algorithm.
   # @author WildDima
   class Compression
     include HashParams

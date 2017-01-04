@@ -1,12 +1,10 @@
 AllCops:
   Exclude:
-    - crypto_gost.gemspec
+    - stribog.gemspec
     - Rakefile
     - bin/test.rb
-    - lib/crypto_gost/digital_signature_gost_12/modular_arithmetic.rb
-    - lib/crypto_gost/digital_signature_gost_12/group/**/*
+    - lib/stribog/hash_params.rb
     - spec/**/*
-    - stribog.gemspec
 
 Metrics/LineLength:
   Max: 100

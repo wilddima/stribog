@@ -28,24 +28,18 @@ module Stribog
     # @return [BinaryVector] binary representation of message
     attr_reader :message_vector
 
-    # Contain class which implements binary operations
-    #
-    # @api public
-    attr_reader :binary_vector
-
-    # Contain class which implements Digest
-    #
-    # @api public
-    attr_reader :digest
-
     HASH_LENGTH = 512
 
-    def initialize(message, binary_vector: BinaryVector, digest: Digest)
-      @binary_vector = binary_vector
-      @digest = digest
+    def initialize(message)
       @message = message
     end
 
+    # Create digest of {#message}. Default equal to 512.
+    #
+    # @example
+    #   Stribog::CreateHash.new('ruby').call(256)
+    #   Stribog::CreateHash.new('ruby').call(512)
+    # @author WildDima
     def call(digest_length = HASH_LENGTH)
       prepare_hash_params!(digest_length: digest_length)
 
@@ -163,6 +157,14 @@ module Stribog
 
     def create_digest(binary_vector)
       digest.new(binary_vector: binary_vector)
+    end
+
+    def binary_vector
+      @binary_vector ||= BinaryVector
+    end
+
+    def digest
+      @digest ||= Digest
     end
   end
 end

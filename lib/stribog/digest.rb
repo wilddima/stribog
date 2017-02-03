@@ -1,3 +1,5 @@
+require 'base64'
+
 module Stribog
   # Digest
   #
@@ -20,10 +22,19 @@ module Stribog
     #   digest.hex
     # @return [String] hex representation of digest
     attr_reader :hex
+    alias_method :to_hex, :hex
 
     def initialize(binary_vector:)
-      @binary = binary_vector.vector
+      @binary = binary_vector
       @hex = binary_vector.to_hex
+    end
+
+    def base64
+      Base64.encode64(hex)
+    end
+
+    def pack(meaning = 'C*')
+      binary.to_byte_array.pack(meaning)
     end
   end
 end

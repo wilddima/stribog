@@ -28,10 +28,14 @@ Or install it yourself as:
   hash = Stribog::CreateHash.new('ruby')
 
   # for 256 bit
-  hash.(256).to_hex #=> "cde7864b760a690f4ec24ffe5c66bd2c00db843e9cf1b82b6c467dba5a7846a7"
+  hash.(256).hex #=> "cde7864b760a690f4ec24ffe5c66bd2c00db843e9cf1b82b6c467dba5a7846a7"
+  hash.(256).base64
+  hash.(256).pack
 
   # for 512 bit
-  hash.(512).to_hex #=> "f0dafc0703f801d1ecbe7ff246808d07507f67879eaacf887ba041336fd51e0a964f00470ed0eedb0378a39e019eb308876ea8c84bb89e2c35159fb6dbbdc598"
+  hash.(512).hex #=> "f0dafc0703f801d1ecbe7ff246808d07507f67879eaacf887ba041336fd51e0a964f00470ed0eedb0378a39e019eb308876ea8c84bb89e2c35159fb6dbbdc598"
+  hash.(512).base64
+  hash.(512).pack
 
 === Contributing
 

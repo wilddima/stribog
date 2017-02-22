@@ -41,7 +41,7 @@ module Stribog
     #   Stribog::CreateHash.new('ruby').call(512)
     # @author WildDima
     def call(digest_length = HASH_LENGTH)
-      prepare_hash_params!(digest_length: digest_length)
+      prepare_hash_params(digest_length: digest_length)
 
       return_hash(
         final_compression(
@@ -60,7 +60,7 @@ module Stribog
     private
 
     # Create instance vars for hashing
-    def prepare_hash_params!(digest_length:)
+    def prepare_hash_params(digest_length:)
       @n = binary_vector_field_by
       @sum = binary_vector_field_by
       @digest_length = digest_length

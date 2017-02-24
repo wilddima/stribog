@@ -22,7 +22,7 @@ module Stribog
     #   digest.hex
     # @return [String] hex representation of digest
     attr_reader :hex
-    alias_method :to_hex, :hex
+    alias to_hex hex
 
     def initialize(binary_vector:)
       @binary = binary_vector

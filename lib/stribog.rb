@@ -8,4 +8,5 @@ module Stribog
   require_relative './stribog/compression'
   require_relative './stribog/binary_vector'
   require_relative './stribog/digest'
+  require_relative './stribog/byte_vector'
 end

@@ -25,14 +25,15 @@ module Stribog
       self.class.new vector + other.to_a
     end
 
-    def addition_by_zeros(size: 512)
+    def addition(size: 64)
       return self if vector.size >= size
-      self.class.new(Array.new(size - vector.size, 0) + @vector)
+      self.class.new(Array.new(size - vector.size, 0) + vector)
     end
 
-    def addition_bit_padding(size: 512)
+    def padding(size: 64)
       return self if vector.size >= size
-      (self.class.new([1]) + vector).addition_by_zeros(size: 512)
+      # (self.class.new([1]) + vector).addition_by_zeros(size: 512)
+      self.class.new([1] + vector).addition(size: size)
     end
 
     def to_dec

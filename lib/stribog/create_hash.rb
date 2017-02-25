@@ -42,6 +42,13 @@ module Stribog
     #   Stribog::CreateHash.new('ruby').call(512)
     # @author WildDima
     def call(digest_length = HASH_LENGTH)
+
+      # Stage::Final.new(
+      #   Stage::Compression.new(
+      #     Stage::Initial.new(self)
+      #   )
+      # ).call
+
       prepare_hash_params(digest_length: digest_length)
 
       return_hash(

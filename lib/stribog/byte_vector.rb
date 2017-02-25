@@ -8,7 +8,12 @@ module Stribog
     attr_reader :vector
 
     def self.convert(vector)
-      new(vector.unpack('C*'))
+      case vector
+      when String
+        new(vector.unpack('C*'))
+      when Numeric
+        new([vector.to_s(2)].pack('B*').unpack('C*'))
+      end
     end
 
     def initialize(vector)
@@ -36,8 +41,17 @@ module Stribog
       self.class.new([1] + vector).addition(size: size)
     end
 
+    def byte8
+      @byte8 ||= vector.pack('C*').unpack('Q*')
+    end
+
+    def bit64
+      @bit64 ||= byte8.map { |b| [b].pack('Q*').unpack('B*') }
+    end
+
     def to_dec
-      to_s.to_i(2)
+      # to_s.to_i(2)
+      vector.pack('C*').unpack('B*').first.to_i(2)
     end
 
     def to_hex

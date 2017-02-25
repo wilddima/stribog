@@ -30,8 +30,9 @@ module Stribog
 
     HASH_LENGTH = 512
 
-    def initialize(message)
+    def initialize(message, transformation = :from_hex)
       @message = message
+      @transformation = transformation
     end
 
     # Create digest of {#message}. Default equal to 512.
@@ -65,7 +66,8 @@ module Stribog
       @sum = binary_vector_field_by
       @digest_length = digest_length
       @hash_vector = create_hash_vector
-      @message_vector = binary_vector.from_hex(message)
+
+      @message_vector = binary_vector.send(@transformation, message)
     end
 
     # Create hash_vector for hashing

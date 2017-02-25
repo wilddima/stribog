@@ -6,7 +6,6 @@ module Stribog
     include Enumerable
 
     attr_reader :vector
-
     class << self
       def from_byte(byte, size: 8)
         new(byte.to_s(2).chars.map(&:to_i)).addition_by_zeros(size: size)
@@ -15,6 +14,10 @@ module Stribog
       def from_byte_array(byte_array, size: 8)
         new(byte_array.map { |byte| from_byte(byte, size: size).to_a }
                       .inject([]) { |acc, elem| acc + elem })
+      end
+
+      def convert(vector)
+        new(vector.unpack('B*').first.chars.map(&:to_i))
       end
 
       def from_hex(hex)

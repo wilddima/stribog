@@ -59,24 +59,6 @@ module Stribog
                               hash_vector: hash_vector)
         message_head = slice_message_head(current_vector)
       end
-
-      def slice_message_head(message_vector)
-        vector.new(message_vector.vector[0...-HASH_LENGTH])
-      end
-
-      # Method, which slices head of tail
-      def slice_message_tail(message_vector)
-        vector.new(message_vector.vector[-HASH_LENGTH..-1])
-      end
-
-      # Compression method
-      def compress(message:, hash_vector:, n: empty_vector)
-        Compression.new(n, message, hash_vector).call
-      end
-
-      def addition_in_ring(first, second, ring = (2*8)**HASH_LENGTH, size: 64)
-        vector.convert((first + second) % ring)
-      end
     end
   end
 end

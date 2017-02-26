@@ -14,20 +14,22 @@ module Stribog
     # @example
     #   digest.binary
     # @return [Array] binary representation of digest
-    attr_reader :binary
+    attr_reader :vector
     # Contains hex value of hash
     #
     # @api public
     # @example
     #   digest.hex
     # @return [String] hex representation of digest
-    attr_reader :hex
-    alias to_hex hex
 
-    def initialize(binary_vector:)
-      @binary = binary_vector
-      @hex = binary_vector.to_hex
+    def initialize(vector:)
+      @vector = vector
     end
+
+    def hex
+      vector.to_dec.to_s(16)
+    end
+    alias to_hex hex
 
     def base64
       Base64.encode64(hex)

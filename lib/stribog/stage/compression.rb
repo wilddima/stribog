@@ -4,18 +4,6 @@ module Stribog
   # @author WildDima
   module Stage
     class Compression < Base
-      attr_accessor :n
-      attr_accessor :sum
-      attr_accessor :digest_length
-      attr_accessor :hash_vector
-      attr_accessor :message_vector
-      attr_accessor :message_head
-      attr_accessor :current_vector
-
-      def initialize(prev_stage)
-        super(prev_stage)
-      end
-
       def call
         set_params
         compression
@@ -43,8 +31,8 @@ module Stribog
       end
 
       def compression
-        @current_vector = message_head || message_vector
-        if current_vector.size < HASH_LENGTH
+        self.current_vector = message_head || message_vector
+        if current_vector.size * 8 < HASH_LENGTH
           return return_params
         end
 
@@ -53,11 +41,11 @@ module Stribog
       end
 
       def transformation
-        sum = addition_in_ring(sum.to_dec, current_vector.to_dec)
-        n = addition_in_ring(n.to_dec, slice_message_tail(current_vector).size)
-        hash_vector = compress(n: n, message: slice_message_tail(current_vector),
+        self.hash_vector = compress(n: n, message: slice_message_tail(current_vector),
                               hash_vector: hash_vector)
-        message_head = slice_message_head(current_vector)
+        self.sum = addition_in_ring(sum.to_dec, current_vector.to_dec)
+        self.n = addition_in_ring(n.to_dec, slice_message_tail(current_vector).size)
+        self.message_head = slice_message_head(current_vector)
       end
     end
   end

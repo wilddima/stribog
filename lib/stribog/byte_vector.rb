@@ -46,7 +46,7 @@ module Stribog
     end
 
     def bit64
-      @bit64 ||= byte8.map { |b| [b].pack('Q*').unpack('B*') }
+      @bit64 ||= byte8.map { |b| [b].pack('Q*').unpack('B*') }.flatten
     end
 
     def to_dec
@@ -59,7 +59,8 @@ module Stribog
     end
 
     def to_s
-      vector.join
+      # vector.pack('C*')
+      vector
     end
 
     def size
@@ -81,12 +82,14 @@ module Stribog
     end
 
     def to_byte_array
-      raise 'DimensionError' unless (vector.size % 8).zero?
-      vector.each_slice(8).map { |byte| byte.join.to_i(2) }
+      # raise 'DimensionError' unless (vector.size % 8).zero?
+      # vector.each_slice(8).map { |byte| byte.join.to_i(2) }
+      vector
     end
 
     def zero?
-      to_dec.zero?
+      # to_dec.zero?
+      vector.any?(&:zero?)
     end
 
     private

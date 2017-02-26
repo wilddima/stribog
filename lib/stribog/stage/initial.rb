@@ -4,10 +4,6 @@ module Stribog
   # @author WildDima
   module Stage
     class Initial < Base
-      def initialize(prev_stage)
-        super(prev_stage)
-      end
-
       def call
         return_params
       end

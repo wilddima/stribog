@@ -28,7 +28,6 @@ module Stribog
     # @return [BinaryVector] binary representation of message
     attr_reader :message_vector
 
-    HASH_LENGTH = 512
 
     def initialize(message, transformation = :from_hex)
       @message = message
@@ -42,27 +41,29 @@ module Stribog
     #   Stribog::CreateHash.new('ruby').call(512)
     # @author WildDima
     def call(digest_length = HASH_LENGTH)
-
-      # Stage::Final.new(
-      #   Stage::Compression.new(
-      #     Stage::Initial.new(self)
-      #   )
-      # ).call
-
-      prepare_hash_params(digest_length: digest_length)
-
+      @digest_length = digest_length
       return_hash(
-        final_compression(
-          core_hashing(
-            compact_message(
-              sum: @sum,
-              n: @n,
-              message_vector: message_vector,
-              hash_vector: @hash_vector
-            )
+        Stage::Final.new(
+          Stage::Compression.new(
+            Stage::Initial.new(self)
           )
-        )
+        ).call
       )
+
+    #   prepare_hash_params(digest_length: digest_length)
+    #   return_hash(
+    #     final_compression(
+    #       core_hashing(
+    #         compact_message(
+    #           sum: @sum,
+    #           n: @n,
+    #           message_vector: message_vector,
+    #           hash_vector: @hash_vector
+    #         )
+    #       )
+    #     )
+    #   )
+
     end
 
     private
@@ -145,7 +146,7 @@ module Stribog
       when 512
         create_digest(final_vector)
       when 256
-        create_digest(binary_vector_from_array(final_vector[0..255]))
+        create_digest(binary_vector_from_array(final_vector[0..63]))
       else
         raise ArgumentError,
               "digest length must be equal to 256 or 512, not #{digest_length}"
@@ -178,8 +179,8 @@ module Stribog
     end
 
     # Create new instance of Digest
-    def create_digest(binary_vector)
-      digest.new(binary_vector: binary_vector)
+    def create_digest(vector)
+      digest.new(vector: vector)
     end
 
     def binary_vector

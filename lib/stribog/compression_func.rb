@@ -3,7 +3,7 @@ module Stribog
   #
   # Class implements compression function of GOST R 34.11-2012 algorithm.
   # @author WildDima
-  class Compression
+  class CompressionFunc
     include HashParams
 
     def initialize(n, message, hash_vector)
@@ -32,36 +32,34 @@ module Stribog
     end
 
     def replacement_pi(vector)
-      BinaryVector.from_byte_array vector.to_byte_array
+      ByteVector.new vector.to_byte_array
                                          .map { |byte| PI[byte] }
     end
 
     # rubocop:disable Style/EachWithObject
     def permutation_t(vector)
-      BinaryVector.from_byte_array(
+      ByteVector.new(
         vector.to_byte_array
               .each.with_index.inject([]) do |b_arr, (byte, index)|
                 b_arr[T[index]] = byte
                 b_arr
-              end
+               end.map(&:to_i)
       )
     end
     # rubocop:enable Style/EachWithObject
 
     def linear_transformation(vector)
-      BinaryVector.from_byte_array(
-        vector.each_slice(64).map do |byte8|
-          small_linear_transformation(BinaryVector.new(byte8)).to_dec
-        end,
-        size: 64
+      ByteVector.new(
+        vector.bit64.map do |byte8|
+          small_linear_transformation(byte8)
+        end.flatten
       )
     end
 
     def small_linear_transformation(vector)
-      BinaryVector.from_byte(
-        not_zeros_indexes(vector)
-          .inject(0) { |acc, elem| acc ^ MATRIX_A[elem] }
-      ).addition_by_zeros(size: 64)
+      [not_zeros_indexes(vector)
+        .inject(0) { |acc, elem| acc ^ MATRIX_A[elem] }]
+        .pack('Q*').unpack('C*')
     end
 
     # rubocop:disable Style/EachWithObject
@@ -70,8 +68,7 @@ module Stribog
                 .inject(v1: first_vector.dup,
                         v2: second_vector.dup) do |vs, const|
         vs[:v2] = lpsx_func(vs[:v1], vs[:v2])
-        vs[:v1] = lpsx_func(vs[:v1], BinaryVector.from_byte(const.to_i(16),
-                                                            size: 512))
+        vs[:v1] = lpsx_func(vs[:v1], ByteVector.convert(const))
         vs
       end
       vectors[:v1] ^ vectors[:v2]
@@ -79,8 +76,8 @@ module Stribog
     # rubocop:enable Style/EachWithObject
 
     def not_zeros_indexes(vector)
-      vector.map.with_index do |bit, index|
-        next if bit.zero?
+      vector.chars.map.with_index do |bit, index|
+        next if bit == '0'
         index
       end.compact
     end

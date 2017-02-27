@@ -72,6 +72,7 @@ module Stribog
     end
 
     def each
+      return vector.each unless block_given?
       vector.each do |v|
         yield(v)
       end
@@ -81,22 +82,11 @@ module Stribog
       vector
     end
 
-    def to_byte_array
-      # raise 'DimensionError' unless (vector.size % 8).zero?
-      # vector.each_slice(8).map { |byte| byte.join.to_i(2) }
-      vector
-    end
-
     def zero?
-      # to_dec.zero?
       vector.any?(&:zero?)
     end
 
     private
-
-    def binary?
-      vector.all? { |el| [0, 1].include? el }
-    end
 
     def according_dimension?(second_vector)
       vector.size == second_vector.size

@@ -32,15 +32,13 @@ module Stribog
     end
 
     def replacement_pi(vector)
-      ByteVector.new vector.to_byte_array
-                                         .map { |byte| PI[byte] }
+      ByteVector.new vector.map { |byte| PI[byte] }
     end
 
     # rubocop:disable Style/EachWithObject
     def permutation_t(vector)
       ByteVector.new(
-        vector.to_byte_array
-              .each.with_index.inject([]) do |b_arr, (byte, index)|
+        vector.each.with_index.inject([]) do |b_arr, (byte, index)|
                 b_arr[T[index]] = byte
                 b_arr
                end.map(&:to_i)

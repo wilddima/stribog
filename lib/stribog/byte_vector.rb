@@ -12,7 +12,9 @@ module Stribog
       when String
         new(vector.unpack('C*'))
       when Numeric
-        new([vector.to_s(2)].pack('B*').unpack('C*'))
+        # TODO: REFACTOR
+        t = vector.to_s(2)
+        new(['0' * (512 - t.size) + t].pack('B*').unpack('C*'))
       end
     end
 

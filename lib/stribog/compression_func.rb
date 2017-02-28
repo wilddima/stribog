@@ -47,6 +47,7 @@ module Stribog
     # rubocop:enable Style/EachWithObject
 
     def linear_transformation(vector)
+      # FIX ERROR
       ByteVector.new(
         vector.bit64.map do |byte8|
           small_linear_transformation(byte8)

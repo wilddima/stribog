@@ -15,6 +15,7 @@ module Stribog
     #   digest.binary
     # @return [Array] binary representation of digest
     attr_reader :vector
+    attr_reader :dec
     # Contains hex value of hash
     #
     # @api public
@@ -24,15 +25,16 @@ module Stribog
 
     def initialize(vector:)
       @vector = vector
+      @dec = vector.to_dec
     end
 
     def hex
-      vector.to_dec.to_s(16)
+      dec.to_s(16)
     end
     alias to_hex hex
 
     def base64
-      Base64.encode64(hex)
+      Base64.encode64(dec.to_s)
     end
 
     def pack(meaning = 'C*')

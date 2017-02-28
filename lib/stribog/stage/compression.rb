@@ -44,7 +44,7 @@ module Stribog
         self.hash_vector = compress(n: n, message: slice_message_tail(current_vector),
                               hash_vector: hash_vector)
         self.sum = addition_in_ring(sum.to_dec, current_vector.to_dec)
-        self.n = addition_in_ring(n.to_dec, slice_message_tail(current_vector).size)
+        self.n = addition_in_ring(n.to_dec, slice_message_tail(current_vector).size * 8)
         self.message_head = slice_message_head(current_vector)
       end
     end

@@ -51,7 +51,7 @@ module Stribog
         CompressionFunc.new(n, message, hash_vector).call
       end
 
-      def addition_in_ring(first, second, ring = (2*8)**HASH_LENGTH, size: 64)
+      def addition_in_ring(first, second, ring = 2**HASH_LENGTH, size: 64)
         vector.convert((first + second) % ring)
       end
     end

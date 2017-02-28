@@ -15,4 +15,8 @@ module Stribog
   require_relative './stribog/stage/final'
 
   HASH_LENGTH = 512
+
+  def self.vector
+    ByteVector
+  end
 end

@@ -74,18 +74,18 @@ describe Stribog::CreateHash do
   #   end
   # end
 
-  context '1000 bytes message' do
-    message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac augue metus. Integer et feugiat nisl, at dignissim nisi. Nullam id pharetra felis. Fusce in felis eu leo gravida imperdiet sed id velit. Nam dignissim porttitor massa, quis vestibulum magna malesuada vitae. Maecenas aliquam sit amet sem vitae varius. Pellentesque facilisis bibendum eros quis cursus. Cras dolor urna, facilisis porta eros quis, commodo fermentum risus. In hac habitasse platea dictumst. Ut eget sollicitudin lectus. Sed porta elit arcu, lobortis maximus libero aliquam at. Integer dignissim tincidunt eros sit amet dapibus. Nulla sit amet mattis elit, sit amet semper nunc. Fusce nisl tellus, mollis scelerisque condimentum id, convallis at felis. Ut dignissim tincidunt mattis. Nunc eget purus eu metus fringilla fringilla. Curabitur dapibus cursus enim, consequat porttitor sapien scelerisque sit amet. Curabitur tristique accumsan erat. Vivamus imperdiet nisl libero, ut vehicula nibh mollis in. Mauris viverra fusce.'
-    q = Stribog::CreateHash.new(message)
-
-    it 'should has correct hash 256 bit' do
-      expect(q.(256).hex).to eq('ecb9740fe86431761b774916ad420fee0beb422cf714640a8f962343c8b88476')
-    end
-
-    it 'should has correct hash 512 bit' do
-      expect(q.(512).hex).to eq('7d99e2c04f74519c793cbc5ca06239b2600c62ffe74ef275a13e895da83c4f396135e0b73a140f0246d0414dd2e2f3fbca30093e73106f74d3eeb9873af4dfe8')
-    end
-  end
+  # context '1000 bytes message' do
+  #   message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac augue metus. Integer et feugiat nisl, at dignissim nisi. Nullam id pharetra felis. Fusce in felis eu leo gravida imperdiet sed id velit. Nam dignissim porttitor massa, quis vestibulum magna malesuada vitae. Maecenas aliquam sit amet sem vitae varius. Pellentesque facilisis bibendum eros quis cursus. Cras dolor urna, facilisis porta eros quis, commodo fermentum risus. In hac habitasse platea dictumst. Ut eget sollicitudin lectus. Sed porta elit arcu, lobortis maximus libero aliquam at. Integer dignissim tincidunt eros sit amet dapibus. Nulla sit amet mattis elit, sit amet semper nunc. Fusce nisl tellus, mollis scelerisque condimentum id, convallis at felis. Ut dignissim tincidunt mattis. Nunc eget purus eu metus fringilla fringilla. Curabitur dapibus cursus enim, consequat porttitor sapien scelerisque sit amet. Curabitur tristique accumsan erat. Vivamus imperdiet nisl libero, ut vehicula nibh mollis in. Mauris viverra fusce.'
+  #   q = Stribog::CreateHash.new(message)
+  #
+  #   it 'should has correct hash 256 bit' do
+  #     expect(q.(256).hex).to eq('ecb9740fe86431761b774916ad420fee0beb422cf714640a8f962343c8b88476')
+  #   end
+  #
+  #   it 'should has correct hash 512 bit' do
+  #     expect(q.(512).hex).to eq('7d99e2c04f74519c793cbc5ca06239b2600c62ffe74ef275a13e895da83c4f396135e0b73a140f0246d0414dd2e2f3fbca30093e73106f74d3eeb9873af4dfe8')
+  #   end
+  # end
 
   context 'from string' do
     message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac augue metus. Integer et feugiat nisl, at dignissim nisi. Nullam id pharetra felis. Fusce in felis eu leo gravida imperdiet sed id velit. Nam dignissim porttitor massa, quis vestibulum magna malesuada vitae. Maecenas aliquam sit amet sem vitae varius. Pellentesque facilisis bibendum eros quis cursus. Cras dolor urna, facilisis porta eros quis, commodo fermentum risus. In hac habitasse platea dictumst. Ut eget sollicitudin lectus. Sed porta elit arcu, lobortis maximus libero aliquam at. Integer dignissim tincidunt eros sit amet dapibus. Nulla sit amet mattis elit, sit amet semper nunc. Fusce nisl tellus, mollis scelerisque condimentum id, convallis at felis. Ut dignissim tincidunt mattis. Nunc eget purus eu metus fringilla fringilla. Curabitur dapibus cursus enim, consequat porttitor sapien scelerisque sit amet. Curabitur tristique accumsan erat. Vivamus imperdiet nisl libero, ut vehicula nibh mollis in. Mauris viverra fusce.'

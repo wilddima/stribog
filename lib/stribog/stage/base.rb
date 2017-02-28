@@ -14,7 +14,7 @@ module Stribog
       attr_accessor :message_head
       attr_accessor :current_vector
 
-      def initialize(prev_stage, vector = ByteVector)
+      def initialize(prev_stage, vector = Stribog.vector)
         @prev_stage = prev_stage
         @vector = vector
       end

@@ -27,11 +27,13 @@ module Stribog
     #   digest.message_vector
     # @return [BinaryVector] binary representation of message
     attr_reader :message_vector
+    attr_reader :vector
 
 
-    def initialize(message, transformation = :from_hex)
+    def initialize(message, transformation = :from_hex, vector = Stribog.vector)
       @message = message
       @transformation = transformation
+      @vector = vector
     end
 
     # Create digest of {#message}. Default equal to 512.
@@ -49,21 +51,6 @@ module Stribog
           )
         ).call
       )
-
-    #   prepare_hash_params(digest_length: digest_length)
-    #   return_hash(
-    #     final_compression(
-    #       core_hashing(
-    #         compact_message(
-    #           sum: @sum,
-    #           n: @n,
-    #           message_vector: message_vector,
-    #           hash_vector: @hash_vector
-    #         )
-    #       )
-    #     )
-    #   )
-
     end
 
     private
@@ -146,7 +133,7 @@ module Stribog
       when 512
         create_digest(final_vector)
       when 256
-        create_digest(binary_vector_from_array(final_vector[0..63]))
+        create_digest(vector_from_array(final_vector[0..31]))
       else
         raise ArgumentError,
               "digest length must be equal to 256 or 512, not #{digest_length}"
@@ -168,9 +155,8 @@ module Stribog
       Compression.new(n, message, hash_vector).call
     end
 
-    # Method creates binary vector from array
-    def binary_vector_from_array(vector)
-      binary_vector.new(vector)
+    def vector_from_array(v)
+      vector.new(v)
     end
 
     # Method creates binary vector and fields it by passed values

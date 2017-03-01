@@ -47,7 +47,6 @@ module Stribog
     # rubocop:enable Style/EachWithObject
 
     def linear_transformation(vector)
-      # FIX ERROR
       ByteVector.new(
         vector.bit64.map do |byte8|
           small_linear_transformation(byte8)
@@ -56,9 +55,11 @@ module Stribog
     end
 
     def small_linear_transformation(vector)
-      [not_zeros_indexes(vector)
-        .inject(0) { |acc, elem| acc ^ MATRIX_A[elem] }]
-        .pack('Q*').unpack('C*')
+      # REFACTOR
+      ByteVector.convert(
+        not_zeros_indexes(vector)
+          .inject(0) { |acc, elem| acc ^ MATRIX_A[elem] }
+      ).to_a
     end
 
     # rubocop:disable Style/EachWithObject

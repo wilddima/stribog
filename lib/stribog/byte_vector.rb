@@ -13,8 +13,9 @@ module Stribog
         new(vector.unpack('C*'))
       when Numeric
         # TODO: REFACTOR
-        t = vector.to_s(2)
-        new(['0' * (512 - t.size) + t].pack('B*').unpack('C*'))
+        bin = vector.to_s(2)
+        size = 2 ** Math.log2(vector.size * 8).ceil
+        new(['0' * (size - bin.size) + bin].pack('B*').unpack('C*'))
       end
     end
 
@@ -23,7 +24,6 @@ module Stribog
     end
 
     def ^(other)
-      # raise 'DimensionError' unless according_dimension?(other)
       self.class.new vector.map
                            .with_index { |bit, index| bit ^ (other[index] || 0) }
     end
@@ -66,7 +66,7 @@ module Stribog
     end
 
     def size
-      vector.size
+      @size ||= vector.size
     end
 
     def [](index)
@@ -86,12 +86,6 @@ module Stribog
 
     def zero?
       vector.any?(&:zero?)
-    end
-
-    private
-
-    def according_dimension?(second_vector)
-      vector.size == second_vector.size
     end
   end
 end

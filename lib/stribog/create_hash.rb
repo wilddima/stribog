@@ -169,10 +169,6 @@ module Stribog
       digest.new(vector: vector)
     end
 
-    def binary_vector
-      @binary_vector ||= BinaryVector
-    end
-
     def digest
       @digest ||= Digest
     end

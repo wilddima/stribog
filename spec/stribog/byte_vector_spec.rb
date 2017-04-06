@@ -43,6 +43,8 @@ describe Stribog::ByteVector do
       expect((vector1 ^ vector2).vector).to eq([6])
       expect((vector1 ^ empty_vector).vector).to eq([113])
       expect((vector3 ^ vector4).vector).to eq((vector4 ^ vector3).vector)
+      expect((subject.new([155, 24]) ^ subject.new([1, 1, 1])).vector).to eq([1, 154, 25])
+      expect((vector3 ^ vector4).to_dec).to eq(8156933504145439190143824114851680197889203374304995740886905492535868873425249970823454887321295395449940435799358355223320219111217687837511987809818214)
       expect((empty_vector ^ empty_vector).vector).to eq([])
     end
   end

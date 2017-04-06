@@ -14,7 +14,6 @@ module Stribog
 # [@n.to_dec, @message.to_dec, @hash_vector.to_dec]
 # ((func_e(lpsx_func(@n, @hash_vector), @message) ^ @hash_vector) ^ @message).to_dec
     def call
-      # binding.pry
       vector = lpsx_func @n, @hash_vector
       vector = func_e vector, @message
       vector = vector ^ @hash_vector

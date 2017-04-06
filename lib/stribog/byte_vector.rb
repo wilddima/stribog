@@ -24,9 +24,10 @@ module Stribog
     end
 
     def ^(other)
-      vec = other.size >= vector.size ? [other, vector] : [vector, other]
+      vec = [other, self].sort_by(&:size).reverse.map(&:reverse)
       self.class.new vec[0].map
                            .with_index { |bit, index| bit ^ (vec[1][index] || 0) }
+                           .reverse
     end
 
     def +(other)
@@ -87,6 +88,10 @@ module Stribog
 
     def zero?
       vector.any?(&:zero?)
+    end
+
+    def reverse
+      self.class.new vector.reverse
     end
   end
 end

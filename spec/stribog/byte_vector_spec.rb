@@ -4,6 +4,15 @@ describe Stribog::ByteVector do
   subject { Stribog::ByteVector }
   let(:vector1) { subject.convert 'q' }
   let(:vector2) { subject.convert 'w' }
+  let(:vector3) { subject.new [0, 0, 0, 0, 0, 0, 2, 0] }
+  let(:vector4) { subject.new [155, 190, 66, 172, 89, 98, 109, 77,
+                               95, 105, 11, 42, 140, 97, 22, 243,
+                               166, 186, 189, 107, 168, 85, 219, 56,
+                               203, 238, 86, 144, 96, 98, 73, 101,
+                               135, 62, 119, 34, 221, 92, 183, 237,
+                               45, 252, 27, 234, 76, 86, 217, 93,
+                               83, 15, 110, 40, 228, 90, 161, 229,
+                               178, 11, 81, 104, 98, 133, 20, 102] }
   let(:empty_vector) { subject.convert '' }
 
   context 'create vector' do
@@ -30,9 +39,10 @@ describe Stribog::ByteVector do
   end
 
   context '#^' do
-    it 'should return new vector contains concatenation of two' do
+    it 'should return new vector contains xor of two' do
       expect((vector1 ^ vector2).vector).to eq([6])
       expect((vector1 ^ empty_vector).vector).to eq([113])
+      expect((vector3 ^ vector4).vector).to eq((vector4 ^ vector3).vector)
       expect((empty_vector ^ empty_vector).vector).to eq([])
     end
   end

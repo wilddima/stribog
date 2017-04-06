@@ -1,4 +1,6 @@
 require 'stribog/version'
+require 'pry'
+require 'pry-byebug'
 # Stribog gost
 #
 # @author WildDima

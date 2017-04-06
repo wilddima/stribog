@@ -24,8 +24,9 @@ module Stribog
     end
 
     def ^(other)
-      self.class.new vector.map
-                           .with_index { |bit, index| bit ^ (other[index] || 0) }
+      vec = other.size >= vector.size ? [other, vector] : [vector, other]
+      self.class.new vec[0].map
+                           .with_index { |bit, index| bit ^ (vec[1][index] || 0) }
     end
 
     def +(other)

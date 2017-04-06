@@ -42,4 +42,3 @@ module Stribog
     end
   end
 end
-

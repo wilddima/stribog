@@ -3,7 +3,7 @@
 {<img src="https://travis-ci.org/WildDima/stribog.svg?branch=master"
 alt="Build Status" />}[https://travis-ci.org/WildDima/stribog]
 
-Ruby library implementing GOST 34.11-12 Stribog
+Ruby library implementing GOST 34.11-12 Stribog (not production ready)
 
 === Installation
 
@@ -45,4 +45,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/wilddi
 === License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

@@ -4,7 +4,6 @@
 alt="Build Status" />}[https://travis-ci.org/WildDima/stribog]
 
 Ruby library implementing GOST 34.11-12 Stribog
-(Not production ready. I'm working on speed up in another branch.)
 
 === Installation
 
@@ -26,7 +25,7 @@ Or install it yourself as:
 
   require 'stribog'
 
-  hash = Stribog::CreateHash.new('ruby')
+  hash = Stribog::CreateHash.new('ruby', :convert)
 
   # for 256 bit
   hash.(256).hex #=> "cde7864b760a690f4ec24ffe5c66bd2c00db843e9cf1b82b6c467dba5a7846a7"

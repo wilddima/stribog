@@ -26,7 +26,7 @@ module Stribog
           sum: sum,
           digest_length: digest_length,
           hash_vector: hash_vector,
-          message_vector: message_vector
+          message_vector: current_vector
         }
       end
 
@@ -35,7 +35,7 @@ module Stribog
         if current_vector.size * 8 < HASH_LENGTH
           return return_params
         end
-
+        # puts current_vector.size
         transformation
         compression
       end

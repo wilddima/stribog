@@ -11,18 +11,16 @@ module Stribog
       @message = message
       @hash_vector = hash_vector
     end
-# [@n.to_dec, @message.to_dec, @hash_vector.to_dec]
-# ((func_e(lpsx_func(@n, @hash_vector), @message) ^ @hash_vector) ^ @message).to_dec
+
     def call
       vector = lpsx_func @n, @hash_vector
       vector = func_e vector, @message
       vector = vector ^ @hash_vector
-      # проблема в том, что неправильно делается xor
       vector ^ @message
     end
 
     private
-# linear_transformation(permutation_t(replacement_pi(first_vector ^ second_vector)))
+
     def lpsx_func(first_vector, second_vector)
       linear_transformation(
         permutation_t(

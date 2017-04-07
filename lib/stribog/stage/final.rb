@@ -25,11 +25,10 @@ module Stribog
                                     message: message_vector.padding,
                                     hash_vector: hash_vector)
         self.sum = addition_in_ring(sum.to_dec, message_vector.padding.to_dec)
-        self.n = addition_in_ring(n.to_dec, message_vector.to_dec)
+        self.n = addition_in_ring(n.to_dec, message_vector.size * 8)
 
         compress(message: sum, hash_vector: compress(message: n, hash_vector: hash_vector))
       end
     end
   end
 end
-

@@ -14,7 +14,7 @@ module Stribog
       when Numeric
         # TODO: REFACTOR
         bin = vector.to_s(2)
-        size = 2 ** Math.log2(vector.size * 8).ceil
+        size = 2**Math.log2(vector.size * 8).ceil
         new(['0' * (size - bin.size) + bin].pack('B*').unpack('C*'))
       end
     end
@@ -26,8 +26,7 @@ module Stribog
     def ^(other)
       vec = [other, self].sort_by(&:size).reverse.map(&:reverse)
       self.class.new vec[0].map
-                           .with_index { |bit, index| bit ^ (vec[1][index] || 0) }
-                           .reverse
+                           .with_index { |bit, index| bit ^ (vec[1][index] || 0) }.reverse
     end
 
     def +(other)

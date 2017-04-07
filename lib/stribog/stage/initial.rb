@@ -3,6 +3,9 @@ module Stribog
   #
   # @author WildDima
   module Stage
+    # Initial
+    #
+    # @author WildDima
     class Initial < Base
       def call
         return_params

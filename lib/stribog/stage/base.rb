@@ -1,8 +1,11 @@
 module Stribog
-  # BinaryVector
+  # Stage
   #
   # @author WildDima
   module Stage
+    # Base
+    #
+    # @author WildDima
     class Base
       attr_reader :prev_stage
       attr_reader :vector
@@ -38,12 +41,12 @@ module Stribog
       end
 
       def slice_message_head(message_vector)
-        vector.new(message_vector.vector[0...-HASH_LENGTH/8])
+        vector.new(message_vector.vector[0...-HASH_LENGTH / 8])
       end
 
       # Method, which slices head of tail
       def slice_message_tail(message_vector)
-        vector.new(message_vector.vector[-HASH_LENGTH/8..-1])
+        vector.new(message_vector.vector[-HASH_LENGTH / 8..-1])
       end
 
       # Compression method
@@ -51,10 +54,9 @@ module Stribog
         CompressionFunc.new(n, message, hash_vector).call
       end
 
-      def addition_in_ring(first, second, ring = 2**HASH_LENGTH, size: 64)
+      def addition_in_ring(first, second, ring = 2**HASH_LENGTH)
         vector.convert((first + second) % ring)
       end
     end
   end
 end
-

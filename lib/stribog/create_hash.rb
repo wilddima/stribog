@@ -29,7 +29,6 @@ module Stribog
     attr_reader :message_vector
     attr_reader :vector
 
-
     def initialize(message, transformation = :from_hex, vector = Stribog.vector)
       @message = message
       @transformation = transformation

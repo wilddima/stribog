@@ -5,15 +5,15 @@ require 'stribog/version'
 #
 # @author WildDima
 module Stribog
-  require_relative './stribog/create_hash'
-  require_relative './stribog/hash_params'
-  require_relative './stribog/compression_func'
-  require_relative './stribog/digest'
-  require_relative './stribog/byte_vector'
-  require_relative './stribog/stage/base'
-  require_relative './stribog/stage/initial'
-  require_relative './stribog/stage/compression'
-  require_relative './stribog/stage/final'
+  require 'stribog/create_hash'
+  require 'stribog/hash_params'
+  require 'stribog/compression_func'
+  require 'stribog/digest'
+  require 'stribog/byte_vector'
+  require 'stribog/stage/base'
+  require 'stribog/stage/initial'
+  require 'stribog/stage/compression'
+  require 'stribog/stage/final'
 
   HASH_LENGTH = 512
 
